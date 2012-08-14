@@ -9,9 +9,6 @@
  
 	//url 뒤에 붙는 query string중 key가 addr인 항목의 값을 읽어옵니다. 여기서 addr은 가져올 rss 주소입니다.
 	String addr = request.getParameter("addr");	
-	if(addr==null){
-		return;
-	}
 	/*String qs = request.getQueryString();
 	if (qs == null) {
 		qs = "http://boribab.tistory.com/rss";
