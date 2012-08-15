@@ -1,20 +1,22 @@
-<%@page import="util.RSSProxy" contentType="text/plain;charset=utf-8"
-%><%@page import="org.json.*"
-%><%@page import="java.net.*" 
-%><%@page import="java.io.*" 
+<%@page import="util.RSSProxy" contentType="text/plain;charset=euc-kr"
+%><%@page import="org.json.*"%><%@page import="java.net.*"
+%><%@page import="java.io.*"
 %><%
-/**
- *	xml í˜•ì‹ìœ¼ë¡œ ì œê³µí•˜ëŠ” RSSë¥¼ json ë¬¸ìžì—´ë¡œ íŒŒì‹±í•˜ëŠ” ê¸°ëŠ¥ìž…ë‹ˆë‹¤.
- */
- 
-	//url ë’¤ì— ë¶™ëŠ” query stringì¤‘ keyê°€ addrì¸ í•­ëª©ì˜ ê°’ì„ ì½ì–´ì˜µë‹ˆë‹¤. ì—¬ê¸°ì„œ addrì€ ê°€ì ¸ì˜¬ rss ì£¼ì†Œìž…ë‹ˆë‹¤.
-	String addr = request.getParameter("addr");	
+	/**
+	 *	xml Çü½ÄÀ¸·Î Á¦°øÇÏ´Â RSS¸¦ json ¹®ÀÚ¿­·Î ÆÄ½ÌÇÏ´Â ±â´ÉÀÔ´Ï´Ù.
+	 */
+
+	//url µÚ¿¡ ºÙ´Â query stringÁß key°¡ addrÀÎ Ç×¸ñÀÇ °ªÀ» ÀÐ¾î¿É´Ï´Ù. ¿©±â¼­ addrÀº °¡Á®¿Ã rss ÁÖ¼ÒÀÔ´Ï´Ù.
+	String addr = request.getParameter("addr");
+	if (addr == null) {
+		addr = "http://boribab.tistory.com/rss";
+	}
 	/*String qs = request.getQueryString();
 	if (qs == null) {
 		qs = "http://boribab.tistory.com/rss";
 	}*/
-	
-	//ì œê³µí•œ rss ì£¼ì†Œì— ìžˆëŠ” ë‚´ìš©ì„ InputStream ì„¸íŠ¸ë¡œ ë‹¤ ì½ì–´ì™€ì„œ ë³€ìˆ˜ feedì— ì €ìž¥í•©ë‹ˆë‹¤.
+
+	//Á¦°øÇÑ rss ÁÖ¼Ò¿¡ ÀÖ´Â ³»¿ëÀ» InputStream ¼¼Æ®·Î ´Ù ÀÐ¾î¿Í¼­ º¯¼ö feed¿¡ ÀúÀåÇÕ´Ï´Ù.
 	String feed = RSSProxy.getCachedXML(addr, "utf-8");
 	JSONObject obj = XML.toJSONObject(feed);
-%><%= obj %>
+%><%=obj%>
