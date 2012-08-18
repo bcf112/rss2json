@@ -1,10 +1,10 @@
 package util;
 
 import java.util.ArrayList;
-
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
+
 
 public class RankHandle extends DefaultHandler {
 	boolean flagK = false;
@@ -14,18 +14,20 @@ public class RankHandle extends DefaultHandler {
 	RankPostDTO post;
 	ArrayList<RankPostDTO> posts = new ArrayList<RankPostDTO>();
 
+	public ArrayList<RankPostDTO> getPosts() {
+		return posts;
+	}
+
 	@Override
 	public void startElement(String uri, String localName, String qName,
 			Attributes attributes) throws SAXException {
-		// TODO Auto-generated method stub
 		super.startElement(uri, localName, qName, attributes);
-
-		if (localName.equals("K")) {
+		if (qName.equals("K")) {
 			post = new RankPostDTO();
 			flagK = true;
-		} else if (localName.equals("S")) {
+		} else if ("S".equals(qName)) {
 			flagS = true;
-		} else if (localName.equals("V")) {
+		} else if ("V".equals(qName)) {
 			flagV = true;
 		}
 	}
@@ -33,9 +35,7 @@ public class RankHandle extends DefaultHandler {
 	@Override
 	public void characters(char[] ch, int start, int length)
 			throws SAXException {
-		// TODO Auto-generated method stub
 		super.characters(ch, start, length);
-
 		if (flagK) {
 			// k를 만나면 setK, K에다가 ch와 시작부분과 length를 지정한다.
 			post.setK(new String(ch, start, length));
@@ -50,13 +50,12 @@ public class RankHandle extends DefaultHandler {
 	@Override
 	public void endElement(String uri, String localName, String qName)
 			throws SAXException {
-		// TODO Auto-generated method stub
 		super.endElement(uri, localName, qName);
-		if (localName.equals("K")) {
+		if ("K".equals(qName)) {
 			flagK = false; // 다음 element를 위해 false로 set
-		} else if (localName.equals("S")) {
+		} else if ("S".equals(qName)) {
 			flagS = false; // 다음 element를 위해 false로 set
-		} else if (localName.equals("V")) {
+		} else if ("V".equals(qName)) {
 			flagV = false; // 다음 element를 위해 false로 set
 			posts.add(post);
 		}

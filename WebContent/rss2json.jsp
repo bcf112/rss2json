@@ -1,15 +1,25 @@
-<%@page import="util.*" contentType="text/plain;charset=utf-8"
-%><%@page import="org.json.*"%><%@page import="java.net.*"
-%><%@page import="java.io.*"
-%><%
-	String addr = request.getParameter("addr");
-	if (addr == null) {
-		addr = "http://boribab.tistory.com/rss";
+<%@page import="util.*" contentType="text/plain;charset=utf-8"%><%@page
+	import="org.json.*"%><%@page import="java.net.*"%><%@page
+	import="java.io.*"%><%
+	
+	boolean jsonP=false;
+	String result="";
+	
+	RankParser json = new RankParser();
+	
+	String cb=request.getParameter("callback");
+	if(cb!=null){
+		jsonP=true;
+		response.setContentType("text/javascript");
+	}else{
+		response.setContentType("application/x-json");
 	}
 	
-	
-	HttpClient client = new DefaultHttpClient();
-
-	String feed = RSSProxy.getCachedXML(addr, "utf-8");
-	JSONObject obj = XML.toJSONObject(feed);
-%><%=obj%>
+	if(jsonP){
+		result=result+cb+"(";
+	}
+	result=result+json.getJsonResult();
+	if(jsonP){
+		result=result+");";
+	}
+%><%=result%>
